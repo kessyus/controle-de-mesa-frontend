@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './components/layout';
-import Home from './views/home'
+import Routers from './routers'
+
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Layout page = "Controle de mesa">
-      <Home />
-    </Layout>
+    <Routers />
   </React.StrictMode>,
   document.getElementById('root')
 );

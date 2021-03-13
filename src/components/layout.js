@@ -1,17 +1,16 @@
 import React from 'react'
 import Header from './header';
+import Footer from  './footer';
 
 const Layout = (props) => {
     document.title = props.page
     return (
         <div>
-            <Header></Header>
+            <Header title={props.page}/>
             <main>
                 {props.children}
             </main>
-            <footer>
-                <p> Todos os direitos reservados</p>
-            </footer>
+            <Footer />
         </div>
     )
 }
