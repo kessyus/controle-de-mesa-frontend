@@ -24,7 +24,7 @@ const Detalhes =(props) => {
             console.log(error)
             history.push('/')
         }
-    }, [id]);
+    }, [id, history]);
 
     useEffect(()=>{
         getDetalhes()
