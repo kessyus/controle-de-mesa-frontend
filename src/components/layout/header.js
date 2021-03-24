@@ -37,7 +37,6 @@ export default Header;
 const SNavbar = styled(Navbar)`
     background-color: #2b2e4a !important;
     padding: 1px;
-
         a{
             color: #fff !important;
             text-decoration: none;

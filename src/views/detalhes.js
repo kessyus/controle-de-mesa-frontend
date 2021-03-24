@@ -12,14 +12,6 @@ const Detalhes =(props) => {
     const [cardapio, setCardapio] = useState({});
     const [update, setUpdate] = useState(false)
     
-    // useEffect (() => {
-    //     const getDetalhes = async () =>{
-    //         const res = await getServiceAllDetalhes(id);
-    //         setDetalhes(res.data)
-    //     };
-    //     getDetalhes();
-    // }, [id])
-
     const getDetalhes = useCallback( async() =>{
         try{
             const res = await getServiceAllDetalhes(id);
@@ -56,7 +48,6 @@ const Detalhes =(props) => {
     return (
         <div>
            {showDetalhes(detalhes)} 
-           <p><strong>Pedido:</strong></p>
             <Produtos cardapio={cardapio} idmesa={id} update={setUpdate} />
             <Pedido lista={detalhes.mesaCardapios} update={setUpdate} />     
         </div>

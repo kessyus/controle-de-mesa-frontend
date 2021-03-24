@@ -2,6 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react'
 import {getServiceAllMesas} from '../services/mesas.service'
 import {Col, Row,} from 'reactstrap';
 import CardItem from '../components/mesas/mesaCard'
+import styled from 'styled-components';
 
 const Mesas = () => {
     
@@ -26,7 +27,7 @@ const Mesas = () => {
      }, [getMesas])
     
     const mapDeMesas = (mesas) => mesas.map((item, i) => (
-       <Col md="3" xl="3" sm="12" xs="12" key={i}>
+       <Col md="3" xl="3" sm="6" xs="6" key={i}>
            <CardItem item={item}/>
        </Col>
         ))
@@ -37,9 +38,9 @@ const Mesas = () => {
                     hasError
                     ? (<div>Aconteceu um erro, volte já!</div>)
                     : (
-                        <Row >
+                        <BoxMesas >
                             {mapDeMesas(mesas)}
-                        </Row>
+                        </BoxMesas>
 
                     )}
             </div>
@@ -48,3 +49,7 @@ const Mesas = () => {
 };
 
 export default Mesas;
+
+const BoxMesas = styled(Row)`
+    
+`
