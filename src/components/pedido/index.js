@@ -18,17 +18,17 @@ const Pedido = ({lista, update}) => {
             <table>
               <thead> 
                 <tr>
-                  <th>ID</th>
+                  <th>ID&nbsp;</th>
                   <th>Produto</th>
-                  <th>Preço</th>
+                  <th>Preço&nbsp;&nbsp;</th>
                   <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {lista && lista.map((v, i) => (
                   <tr key={i}>
-                    <th>{v.id}</th>
-                    <th>{v.cardapio.produto}</th>
+                    <th>{v.id}&nbsp;&nbsp;</th>
+                    <th>{v.cardapio.produto}&nbsp;&nbsp;</th>
                     <th>{v.cardapio.preco}</th>
                     <th><button onClick={() => apagarPedido(v.id)} >Excluir</button></th>
                   </tr>

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import {getServiceAllMesas} from '../services/mesas.service'
-import {Link} from 'react-router-dom'
+import {Col, Row,} from 'reactstrap';
+import CardItem from '../components/mesas/mesaCard'
 
 const Mesas = () => {
     
@@ -25,14 +26,10 @@ const Mesas = () => {
      }, [getMesas])
     
     const mapDeMesas = (mesas) => mesas.map((item, i) => (
-        <li key={i}>
-            <Link to={`/mesa/${item.id}`}>
-                {`Mesa ${item.id} - ${item.ambiente}`}
-            </Link>
-        </li>
+       <Col md="3" xl="3" sm="12" xs="12" key={i}>
+           <CardItem item={item}/>
+       </Col>
         ))
-
-
     return (
     
             <div className="mesas">
@@ -40,9 +37,9 @@ const Mesas = () => {
                     hasError
                     ? (<div>Aconteceu um erro, volte já!</div>)
                     : (
-                        <ul>
-                        {mapDeMesas(mesas)}
-                        </ul>
+                        <Row >
+                            {mapDeMesas(mesas)}
+                        </Row>
 
                     )}
             </div>

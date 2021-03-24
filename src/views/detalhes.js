@@ -49,7 +49,7 @@ const Detalhes =(props) => {
     
     const showDetalhes = detalhes =>(
         <div className="detalhes">
-                <p><strong>Mesa: </strong>{`${detalhes.id} - ${detalhes.ambiente}`}</p>
+                <p><strong>Mesa: </strong>{`${detalhes.numero} - ${detalhes.ambiente}`}</p>
         </div>
     )
     

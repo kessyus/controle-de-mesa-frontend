@@ -1,18 +1,25 @@
 import React from 'react'
 import Header from './header';
 import Footer from  './footer';
+import styled from 'styled-components';
+
 
 const Layout = (props) => {
     document.title = props.page
     return (
-        <div>
+        <>
             <Header title={props.page}/>
-            <main>
+            <Main>
                 {props.children}
-            </main>
+            </Main>
             <Footer />
-        </div>
+        </>
     )
 }
 
 export default Layout;
+
+const Main = styled.main`
+    flex:1 ;
+    padding: 20px;
+`
