@@ -25,11 +25,13 @@ const SCard = styled(Card)`
 
 const SCardBody = styled(CardBody)`
     display:flex;
-    flex-direction: column;  
+    flex-direction: column;
+    color: #53354A;  
 `
 
 const SCardSubtitle = styled(CardSubtitle)`
     font-size: 12px;
+    color: #53354A !important;
 `
 
 const SButton = styled(Button)`

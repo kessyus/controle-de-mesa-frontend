@@ -21,4 +21,5 @@ export default Layout;
 
 const Main = styled.main`
     flex:1 ;
+    padding: 30px;
 `

@@ -34,7 +34,9 @@ const fazerPedido = () =>{
             <FormGroup>
                 <Label for="select" >Selecionar:</Label>
                 <Input type="select" name="idcardapio" value= {produtos.idcardapio || " "} onChange={handleChange}>
-                {cardapio && cardapio.map((v, i) => (
+                    <option>Produtos...</option>
+                    <option data-divider="true">-----------</option>
+                    {cardapio && cardapio.map((v, i) => (
                      <option key={i} value={v.id}> {v.produto} </option>
                     ))}
                 </Input>

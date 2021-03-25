@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {NavLink as RRDNavLink} from 'react-router-dom';
 import {Collapse, Container, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from 'reactstrap'
 import styled from 'styled-components'
+import {GiKnifeFork} from 'react-icons/gi'
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,9 +13,9 @@ const Header = () => {
     
     return (
         <header>
-            <SNavbar color="light" light expand="md">
-                <Container>
-                    <NavbarBrand tag={RRDNavLink} to="/"> Bistrô Carioca</NavbarBrand>
+            <SNavbar color="light" dark expand="md">
+                <SContainer>
+                    <NavbarBrand tag={RRDNavLink} to="/" id="logoMain"> <IconLogo />&nbsp; Bistrô Carioca</NavbarBrand>
                     <NavbarToggler onClick={toggle} />
                     <SCollapse isOpen={isOpen} navbar>
                         <Nav className="mr-auto" navbar>
@@ -26,7 +27,7 @@ const Header = () => {
                             </NavItem>
                         </Nav>
                     </SCollapse>
-                </Container>
+                </SContainer>
             </SNavbar>
         </header>
     )
@@ -36,13 +37,18 @@ export default Header;
 
 const SNavbar = styled(Navbar)`
     background-color: #2b2e4a !important;
-    padding: 1px;
         a{
             color: #fff !important;
             text-decoration: none;
         }
 `
 
+const SContainer = styled(Container)`
+    display:flex;
+    flex-direction: row;
+    align-content: flex-start;
+
+`
 const SNavLink = styled(NavLink)`
     margin: auto 5px;
     border-radius: 5px;
@@ -54,4 +60,14 @@ const SNavLink = styled(NavLink)`
 
 const SCollapse = styled(Collapse)`
     flex-grow: 0;
+`
+
+const IconLogo = styled(GiKnifeFork)`
+    font-size: 22px;
+    margin-bottom: 4px;
+
+    @media (max-width: 767.98px) {
+        margin-left: 5px;
+    }
+
 `
