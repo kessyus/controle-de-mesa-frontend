@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 
-
 const GlobalStyle = createGlobalStyle`
 
     * {
@@ -13,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
         display:flex;
         flex-direction:column;
         height: 100vh;
-        overflow: hidden;
+        
     }
 
 `

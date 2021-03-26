@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Table } from 'reactstrap';
 import {deleteServicePedido} from '../../services/mesas.service'
+import ReactSwal from '../../plugins/swal'
+import { BiTrash } from 'react-icons/bi'
+import styled from 'styled-components';
 
 const Pedido = ({lista, update}) => {
   const [modal, setModal] = useState({
@@ -12,7 +15,14 @@ const Pedido = ({lista, update}) => {
       if (modal.data) { 
       deleteServicePedido(modal.data.id)
           .then(() => {
-            alert('Produto excluido');
+            ReactSwal.fire({
+              icon: 'success',
+              title: `Produto excluído com sucesso!`,
+              showConfirmButton: false,
+              showCloseButton: false,
+              timer: 2500,
+  
+          })
             update(true);
             setModal({
               isOpen: !modal.isOpen
@@ -31,10 +41,10 @@ const Pedido = ({lista, update}) => {
     
       return (
         <div>
-          <h2>Pedidos realizados:</h2>
+          <h3>Pedidos realizados:</h3>
           {lista && lista.length ? (
             <div>
-              <Table>
+              <STable responsive striped size='sm'>
                 <thead> 
                  <tr>
                    <th>ID&nbsp;</th>
@@ -49,11 +59,11 @@ const Pedido = ({lista, update}) => {
                     <th>{v.id}&nbsp;&nbsp;</th>
                     <th>{v.cardapio.produto}&nbsp;&nbsp;</th>
                     <th>{v.cardapio.preco}</th>
-                    <th><Button onClick={() => toggleModal(v)}>Excluir</Button></th>
+                    <th><SButton color='link' onClick={() => toggleModal(v)}><BiTrash size="20" /></SButton></th>
                   </tr>
                 ))}
               </tbody>
-            </Table>
+            </STable>
 
             <Modal isOpen={modal.isOpen} toggle={toggleModal}>
               <ModalHeader toggle={toggleModal}> Excluir Produto</ModalHeader>
@@ -61,7 +71,7 @@ const Pedido = ({lista, update}) => {
                 Deseja Excluir o Produto {modal?.data?.id} ?
               </ModalBody>
               <ModalFooter>
-                <Button onClick={apagarPedido}>Sim</Button>
+                <SButton2 onClick={apagarPedido}>Sim</SButton2>
                 <Button onClick={toggleModal}>Não</Button>
               </ModalFooter>
             </Modal>
@@ -75,3 +85,16 @@ const Pedido = ({lista, update}) => {
     }
     
 export default Pedido
+
+const STable = styled(Table)`
+    overflow:hidden;
+    border-radius: 4px;
+    font-size:14\6px;
+`
+
+const SButton = styled(Button)`
+  color: #903749;
+`
+const SButton2 = styled(Button)`
+  background-color: #903749;
+`

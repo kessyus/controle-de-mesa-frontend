@@ -1,6 +1,8 @@
 import React, {useState, } from 'react'
-import {Button, Form, FormGroup, Input, Label, Col} from 'reactstrap';
+import {Button, Form, FormGroup, Input, Col} from 'reactstrap';
 import { createServicePedido, } from "../../services/mesas.service";
+import ReactSwal from '../../plugins/swal'
+import styled from 'styled-components';
 
 const Produtos = ({cardapio, idmesa, update}) => {
     
@@ -16,7 +18,14 @@ const Produtos = ({cardapio, idmesa, update}) => {
 const fazerPedido = () =>{
     createServicePedido(idmesa, produtos)
     .then(()=>{
-        alert('Produto adcionado');
+        ReactSwal.fire({
+            icon: 'success',
+            title: `Produto incluído com sucesso!`,
+            showConfirmButton: false,
+            showCloseButton: false,
+            timer: 2500,
+
+        })
         setProdutos({});
         update(true);
 
@@ -29,10 +38,9 @@ const fazerPedido = () =>{
         
         <Form>
             <Col xs="12" sm="12" md="8" lg="8">
-            <p><strong>Incluir Produto:</strong></p>
+            <p>Incluir Produto:</p>
             {cardapio && cardapio.length ? (
             <FormGroup>
-                <Label for="select" >Selecionar:</Label>
                 <Input type="select" name="idcardapio" value= {produtos.idcardapio || " "} onChange={handleChange}>
                     <option>Produtos...</option>
                     <option data-divider="true">-----------</option>
@@ -41,7 +49,7 @@ const fazerPedido = () =>{
                     ))}
                 </Input>
                 <br/>
-                <Button onClick={fazerPedido}> Incluir Pedido </Button>      
+                <SButton onClick={fazerPedido}> Incluir Pedido </SButton>      
             </FormGroup>
             ) : (
                 <div>Abrindo o cardápio...</div>
@@ -53,4 +61,6 @@ const fazerPedido = () =>{
   }        
 export default Produtos;
 
-
+const SButton = styled(Button)`
+    background-color: #53354A;
+`

@@ -57,9 +57,9 @@ const Detalhes =(props) => {
                 {isPed ? "Consumo Detalhado" : "Fazer Pedido"}
             </div>
             <div>
-                <Button onClick={() => setPed(!isPed)} color={!isPed ? "primary" : "secondary"} size="sm">
+                <SButton onClick={() => setPed(!isPed)} size="sm">
                     {isPed ? (<> <GiKnifeFork /> Incluir Produto</>) : (<><BsCardChecklist /> Consumo Detalhado</>) }
-                </Button>
+                </SButton>
             </div>
         </SNavbar>
     )
@@ -102,9 +102,18 @@ const SNavbar = styled(Navbar)`
     padding: 10px 0;
     border-bottom: thin dotted #4446;
     display:flex;
-    
+
     .info {
         flex:1;
         font-weight: bold;
         }
+`
+
+
+const SButton = styled(Button)`
+    background-color: #53354A;
+
+    :hover{
+    background-color: (43, 46, 74)
+    }
 `
