@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { getServiceAllDetalhes, getServiceAllCardapio } from '../services/mesas.service';
 import Produtos from '../components/cardapio/cardapio';
 import Pedido from '../components/pedido/index';
+import Loading from '../components/loading'
 import { Button, Jumbotron, Navbar } from 'reactstrap';
 import {GiKnifeFork} from 'react-icons/gi'
 import {BsCardChecklist} from 'react-icons/bs'
@@ -11,6 +12,7 @@ import styled from 'styled-components';
 const Detalhes =(props) => {
     const {id} = useParams();
     const {history} = props;
+    const [loading, setLoading] = useState(false);
     const [detalhes, setDetalhes] = useState({});
     const [cardapio, setCardapio] = useState({});
     const [update, setUpdate] = useState(false);
@@ -18,8 +20,10 @@ const Detalhes =(props) => {
     
     const getDetalhes = useCallback( async() =>{
         try{
+            setLoading(true)
             const res = await getServiceAllDetalhes(id);
             setDetalhes(res.data)
+            setLoading(false)
         } catch (error){
             console.log(error)
             history.push('/')
@@ -77,8 +81,9 @@ const Detalhes =(props) => {
     )
     
     return (
-           
-        mudarTela(detalhes)
+        loading
+        ? <Loading />   
+        : mudarTela(detalhes)
     )
 }
 

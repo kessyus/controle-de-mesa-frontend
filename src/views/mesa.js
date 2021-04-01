@@ -2,24 +2,27 @@ import React, {useState, useEffect, useCallback} from 'react'
 import {getServiceAllMesas} from '../services/mesas.service'
 import {Col, Row,} from 'reactstrap';
 import CardItem from '../components/mesas/mesaCard'
+import Loading from '../components/loading'
 import styled from 'styled-components';
 
 const Mesas = () => {
     
     const [mesas, setMesa] = useState([]);
+    const [loading, setLoading] = useState(false)
     const [hasError, setError] = useState(false)
 
-    // useEffect(() => {
-    //     const getMesas = async () => {
-    //         const res = await getServiceAllMesas();
-    //         setMesa(res.data)
-    //     };
-    //     getMesas();
-    // }, [])
      const getMesas = useCallback (() => {
-         getServiceAllMesas()
-         .then(res => setMesa(res.data))
-         .catch(err => setError(true))
+        setLoading(true) 
+        getServiceAllMesas()
+         .then(res => { 
+             setMesa(res.data)
+            setLoading(false)
+            })
+         .catch(err => {
+             setError(true)
+             setLoading(false)
+         })
+
      }, []);
 
      useEffect(() =>{
@@ -39,7 +42,8 @@ const Mesas = () => {
                     ? (<div>Aconteceu um erro, volte já!</div>)
                     : (
                         <BoxMesas >
-                            {mapDeMesas(mesas)}
+                            {loading ? <Loading/>
+                            : mapDeMesas(mesas)}
                         </BoxMesas>
 
                     )}
