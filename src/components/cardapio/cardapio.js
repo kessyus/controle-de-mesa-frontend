@@ -10,32 +10,30 @@ const Produtos = ({cardapio, idmesa, update}) => {
    
     const handleChange = (e) => {
         setProdutos({
-          ...produtos,
-          [e.target.name]: e.target.value
+            ...produtos,
+            [e.target.name]: e.target.value
         })
-      }    
+    }    
 
-const fazerPedido = () =>{
-    createServicePedido(idmesa, produtos)
-    .then(()=>{
-        ReactSwal.fire({
-            icon: 'success',
-            title: `Produto incluído com sucesso!`,
-            showConfirmButton: false,
-            showCloseButton: false,
-            timer: 2500,
+    const fazerPedido = () =>{
+        createServicePedido(idmesa, produtos)
+        .then(()=>{
+            ReactSwal.fire({
+                icon: 'success',
+                title: `Produto incluído com sucesso!`,
+                showConfirmButton: false,
+                showCloseButton: false,
+                timer: 2500,
 
+            })
+            setProdutos({});
+            update(true);
+    
         })
-        setProdutos({});
-        update(true);
-
- 
-    })
-    .catch(erro => console.log(erro));
-}
+        .catch(erro => console.log(erro));
+    }
        
     return (
-        
         <Form>
             <Col xs="12" sm="12" md="8" lg="8">
             <p>Incluir Produto:</p>
@@ -45,7 +43,7 @@ const fazerPedido = () =>{
                     <option>Produtos...</option>
                     <option data-divider="true">-----------</option>
                     {cardapio && cardapio.map((v, i) => (
-                     <option key={i} value={v.id}> {v.produto} </option>
+                     <option key={i} value={v.id}> {v.categoria} - {v.produto} </option>
                     ))}
                 </Input>
                 <br/>
@@ -56,7 +54,6 @@ const fazerPedido = () =>{
             )}
             </Col>
         </Form>
-    
     );
   }        
 export default Produtos;
