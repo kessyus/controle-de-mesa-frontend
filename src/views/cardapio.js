@@ -8,17 +8,17 @@ import imgPrimavera from '../assets/img/primavera3.png';
 
 const items = [
   {
-    src: imgBatata,
-    caption:
-      'Nossas fritas com uma cobertura irresistível com mix de queijos e bacon.',
-    header: 'Batatas Fritas com Queijo',
-    key: '1',
-  },
-  {
     src: imgFilet,
     caption:
       '375g do corte nobre do contra-filet, perfeitamente temperado e preparado na chapa.',
     header: 'Strip Steak',
+    key: '1',
+  },
+  {
+    src: imgBatata,
+    caption:
+      'Nossas fritas com uma cobertura irresistível com mix de queijos e bacon.',
+    header: 'Batatas Fritas com Queijo',
     key: '2',
   },
   {
