@@ -5,8 +5,8 @@ const Home = () => {
   return (
     <ImagemFundo>
       <Texto>
-        Venha provar essa experiência gastronômica no coração da cidade
-        maravilhosa.
+        Venha provar essa experiência gastronômica inesquecível no coração da
+        cidade maravilhosa.
       </Texto>
       <Espaco></Espaco>
     </ImagemFundo>
@@ -32,8 +32,8 @@ const Texto = styled.div`
   padding-left: 50px;
   font-size: 60px;
 
-  @media only screen and (max-width: 600px) {
-    font-size: 30px;
+  @media only screen and (max-width: 700px) {
+    font-size: 40px;
     width: 80%;
   }
 `;
@@ -41,7 +41,7 @@ const Texto = styled.div`
 const Espaco = styled.div`
   width: 50%;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     width: 20%;
   }
 `;

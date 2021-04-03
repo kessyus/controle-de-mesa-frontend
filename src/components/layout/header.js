@@ -58,16 +58,6 @@ const Header = () => {
                   Cardápio
                 </SNavLink>
               </NavItem>
-              <NavItem>
-                <SNavLink
-                  exact
-                  tag={RRDNavLink}
-                  activeClassName="active"
-                  to="/login"
-                >
-                  Login
-                </SNavLink>
-              </NavItem>
             </Nav>
           </SCollapse>
         </SContainer>

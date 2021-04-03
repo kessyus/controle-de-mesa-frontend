@@ -50,10 +50,10 @@ const Pedido = ({ lista, update }) => {
       <h3>Pedidos realizados:</h3>
       {lista && lista.length ? (
         <div>
-          <STable responsive striped size="sm">
+          <STable responsive striped dark size="sm">
             <thead>
               <tr>
-                <th>Produto</th>
+                <th>&nbsp;Produto</th>
                 <th>Preço&nbsp;&nbsp;</th>
                 <th>Ações</th>
               </tr>
@@ -62,29 +62,22 @@ const Pedido = ({ lista, update }) => {
               {lista &&
                 lista.map((v, i) => (
                   <tr key={i}>
-                    <th>{v.cardapio.produto}&nbsp;&nbsp;</th>
+                    <th>&nbsp;{v.cardapio.produto}&nbsp;&nbsp;</th>
                     <th>{v.cardapio.preco}</th>
                     <th>
-                      <SButton color="link" onClick={() => toggleModal(v)}>
+                      <Button color="link" onClick={() => toggleModal(v)}>
                         <BiTrash size="20" />
-                      </SButton>
+                      </Button>
                     </th>
                   </tr>
                 ))}
               <tr>
+                <th>Total do Consumo</th>
                 <th>
-                  <strong>Total do Consumo</strong>
-                </th>
-                <th>
-                  <strong>
-                    {lista &&
-                      lista
-                        .reduce(
-                          (sum, i) => sum + parseFloat(i.cardapio.preco),
-                          0
-                        )
-                        .toFixed(2)}
-                  </strong>
+                  {lista &&
+                    lista
+                      .reduce((sum, i) => sum + parseFloat(i.cardapio.preco), 0)
+                      .toFixed(2)}
                 </th>
                 <th> </th>
               </tr>
@@ -92,13 +85,21 @@ const Pedido = ({ lista, update }) => {
           </STable>
 
           <Modal isOpen={modal.isOpen} toggle={toggleModal}>
-            <ModalHeader toggle={toggleModal}> Excluir Produto</ModalHeader>
+            <ModalHeader toggle={toggleModal}>
+              <Texto>Excluir Produto</Texto>
+            </ModalHeader>
             <ModalBody>
-              Deseja Excluir o Produto {modal?.data?.cardapio?.produto} ?
+              <Texto>
+                Deseja Excluir o Produto {modal?.data?.cardapio?.produto}?
+              </Texto>
             </ModalBody>
             <ModalFooter>
-              <SButton2 onClick={apagarPedido}>Sim</SButton2>
-              <Button onClick={toggleModal}>Não</Button>
+              <Button onClick={apagarPedido} color="danger">
+                Sim
+              </Button>
+              <Button onClick={toggleModal} color="secondary">
+                Não
+              </Button>
             </ModalFooter>
           </Modal>
         </div>
@@ -117,10 +118,6 @@ const STable = styled(Table)`
     font-size:14\6px;
 `;
 
-const SButton = styled(Button)`
-  color: #903749;
-`;
-
-const SButton2 = styled(Button)`
-  background-color: #903749;
+const Texto = styled.div`
+  color: black !important;
 `;
