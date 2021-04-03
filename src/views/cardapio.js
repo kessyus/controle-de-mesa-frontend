@@ -1,5 +1,6 @@
-import React from 'react';
-import { UncontrolledCarousel } from 'reactstrap';
+import React, { useCallback, useEffect, useState } from 'react';
+import { UncontrolledCarousel, Table } from 'reactstrap';
+import { getServiceAllCardapio } from '../services/mesas.service';
 import styled from 'styled-components';
 import imgBatata from '../assets/img/batata3.png';
 import imgFilet from '../assets/img/filet3.png';
@@ -30,28 +31,88 @@ const items = [
 ];
 
 const CardapioRestaurante = () => {
+  const [cardapio, setCardapio] = useState({});
+  const [update, setUpdate] = useState(false);
+
+  const getCardapio = useCallback(async () => {
+    try {
+      const res = await getServiceAllCardapio();
+      setCardapio(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getCardapio();
+    setUpdate(false);
+  }, [getCardapio, update]);
+
   return (
     <>
       <Carrossel items={items} />
-      <div>
-        <h3>Cardapio 123</h3>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-        <h5>Fetuccine</h5>
-      </div>
+      <Bloco>
+        <Titulo>Cardápio</Titulo>
+        <Table responsive striped dark size="sm">
+          <thead>
+            <tr>
+              <Categoria>Categoria</Categoria>
+              <th>Produto</th>
+              <th>Descrição</th>
+              <th>Preço</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cardapio && cardapio.length ? (
+              cardapio &&
+              cardapio.map((v, i) => (
+                <tr key={i}>
+                  <Categoria>{v.categoria}</Categoria>
+                  <th>{v.produto}</th>
+                  <th>{v.descricao}</th>
+                  <th>{v.preco}</th>
+                </tr>
+              ))
+            ) : (
+              <div>Loading...</div>
+            )}
+          </tbody>
+        </Table>
+      </Bloco>
     </>
   );
 };
 
 export default CardapioRestaurante;
 
-const Carrossel = styled(UncontrolledCarousel)``;
+const Carrossel = styled(UncontrolledCarousel)`
+  height: calc(100vh - 100px);
+
+  @media only screen and (max-width: 700px) {
+    height: auto;
+  }
+`;
+
+const Bloco = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+
+  @media only screen and (max-width: 700px) {
+    padding: 5px;
+  }
+`;
+
+const Titulo = styled.h1`
+  margin: 50px;
+`;
+
+const Categoria = styled.th`
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
+`;
