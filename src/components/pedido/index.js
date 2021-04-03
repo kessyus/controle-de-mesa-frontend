@@ -73,22 +73,18 @@ const Pedido = ({ lista, update }) => {
                 ))}
               <tr>
                 <th>
-                  <h5>
-                    <strong>Total do Consumo</strong>
-                  </h5>
+                  <strong>Total do Consumo</strong>
                 </th>
                 <th>
-                  <h5>
-                    <strong>
-                      {lista &&
-                        lista
-                          .reduce(
-                            (sum, i) => sum + parseFloat(i.cardapio.preco),
-                            0
-                          )
-                          .toFixed(2)}
-                    </strong>
-                  </h5>
+                  <strong>
+                    {lista &&
+                      lista
+                        .reduce(
+                          (sum, i) => sum + parseFloat(i.cardapio.preco),
+                          0
+                        )
+                        .toFixed(2)}
+                  </strong>
                 </th>
                 <th> </th>
               </tr>
