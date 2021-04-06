@@ -1,12 +1,12 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Layout from './components/layout/index';
+import React from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import Layout from "./components/layout/index";
 
 //Views
-import Home from './views/home';
-import Mesas from './views/mesa';
-import Detalhes from './views/detalhes';
-import Cardapio from './views/cardapio';
+import Home from "./views/home";
+import Mesas from "./views/mesa";
+import Detalhes from "./views/detalhes";
+import Cardapio from "./views/cardapio";
 
 const Routers = () => {
   return (
@@ -17,6 +17,7 @@ const Routers = () => {
           <Route exact path="/mesa" component={Mesas} />
           <Route exact path="/mesa/:id" component={Detalhes} />
           <Route exact path="/cardapio" component={Cardapio} />
+          <Redirect from="*" to="/" />
         </Layout>
       </Switch>
     </BrowserRouter>
