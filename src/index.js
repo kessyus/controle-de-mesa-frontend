@@ -4,8 +4,6 @@ import Routers from './routers'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GlobalStyle from './assets/globalStyle'
 
-
-
 ReactDOM.render(
   <React.Fragment>
     <GlobalStyle />
@@ -13,5 +11,3 @@ ReactDOM.render(
   </React.Fragment>,
   document.getElementById('root')
 );
-
-
