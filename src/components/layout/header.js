@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { NavLink as RRDNavLink } from 'react-router-dom';
+import React, { useState } from "react";
+import { NavLink as RRDNavLink } from "react-router-dom";
 import {
   Collapse,
   Container,
@@ -9,9 +9,9 @@ import {
   NavbarToggler,
   NavItem,
   NavLink,
-} from 'reactstrap';
-import styled from 'styled-components';
-import myLogo from '../../assets/img/texto_final.svg';
+} from "reactstrap";
+import styled from "styled-components";
+import myLogo from "../../assets/img/texto_final.svg";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,6 +56,16 @@ const Header = () => {
                   to="/cardapio"
                 >
                   Cardápio
+                </SNavLink>
+              </NavItem>
+              <NavItem>
+                <SNavLink
+                  exact
+                  tag={RRDNavLink}
+                  activeClassName="active"
+                  to="/login"
+                >
+                  Login
                 </SNavLink>
               </NavItem>
             </Nav>

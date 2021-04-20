@@ -7,6 +7,7 @@ import Home from "./views/home";
 import Mesas from "./views/mesa";
 import Detalhes from "./views/detalhes";
 import Cardapio from "./views/cardapio";
+import Login from "./views/login";
 
 const Routers = () => {
   return (
@@ -17,6 +18,7 @@ const Routers = () => {
           <Route exact path="/mesa" component={Mesas} />
           <Route exact path="/mesa/:id" component={Detalhes} />
           <Route exact path="/cardapio" component={Cardapio} />
+          <Route exact path="/login" component={Login} />
           <Redirect from="*" to="/" />
         </Layout>
       </Switch>
