@@ -1,9 +1,8 @@
-//import as libs
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-// importação dos reducers
+// reducers
 import SignReducer from './auth/auth.reducer';
 
 const reducers = combineReducers({

@@ -3,7 +3,7 @@ import axios from 'axios';
 const urlApi = process.env.REACT_APP_API;
 
 const http = axios.create({
-    baseURL: urlApi
+  baseURL: urlApi,
 });
 
 http.defaults.headers['content-type'] = 'application/json';

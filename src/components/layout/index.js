@@ -9,7 +9,6 @@ const Layout = (props) => {
     <>
       <Header title={props.page} />
       <Main>{props.children}</Main>
-      {/* <Footer /> */}
     </>
   );
 };

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { NavLink as RRDNavLink } from "react-router-dom";
+import React, { useState } from 'react';
+import { NavLink as RRDNavLink } from 'react-router-dom';
 import {
   Collapse,
   Container,
@@ -9,14 +9,17 @@ import {
   NavbarToggler,
   NavItem,
   NavLink,
-} from "reactstrap";
-import styled from "styled-components";
-import myLogo from "../../assets/img/texto_final.svg";
+} from 'reactstrap';
+import styled from 'styled-components';
+import myLogo from '../../assets/img/texto_final.svg';
+import { useSelector } from 'react-redux';
+import { isAuthenticated } from '../../config/auth';
 
-const Header = () => {
+const Header = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   return (
     <header>
@@ -43,21 +46,42 @@ const Header = () => {
                   exact
                   tag={RRDNavLink}
                   activeClassName="active"
-                  to="/mesa"
-                >
-                  Atendimento
-                </SNavLink>
-              </NavItem>
-              <NavItem>
-                <SNavLink
-                  exact
-                  tag={RRDNavLink}
-                  activeClassName="active"
                   to="/cardapio"
                 >
                   Cardápio
                 </SNavLink>
               </NavItem>
+
+              {isAuthenticated() ? (
+                <NavItem>
+                  <SNavLink
+                    exact
+                    tag={RRDNavLink}
+                    activeClassName="active"
+                    to="/mesa"
+                  >
+                    Atendimento
+                  </SNavLink>
+                </NavItem>
+              ) : (
+                ''
+              )}
+
+              {isAdmin ? (
+                <NavItem>
+                  <SNavLink
+                    exact
+                    tag={RRDNavLink}
+                    activeClassName="active"
+                    to="/cadastro"
+                  >
+                    Cadastro
+                  </SNavLink>
+                </NavItem>
+              ) : (
+                ''
+              )}
+
               <NavItem>
                 <SNavLink
                   exact

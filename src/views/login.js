@@ -1,41 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, Button, Form, FormGroup, Col, Label, Input } from 'reactstrap';
 import styled from 'styled-components';
+import { signInAction } from '../store/auth/auth.action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
-  const [alertVisible, setAlertVisible] = useState(true);
+  const [alertVisible, setAlertVisible] = useState(false);
   const onDismiss = () => setAlertVisible(false);
+
+  const dispatch = useDispatch();
+  const error = useSelector((state) => state.auth.error);
+  const loading = useSelector((state) => state.auth.loading);
+
+  const [form, setForm] = useState({});
+  const handleChange = (props) => {
+    const { value, name } = props.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    dispatch(signInAction(form));
+  };
 
   return (
     <Area>
       <Alert color="danger" isOpen={alertVisible} toggle={onDismiss}>
-        This is a primary alert — check it out!
+        Usuário ou senha incorreto!
       </Alert>
       <div>
         <LoginForm>
           <FormGroup row>
-            <Label for="nome" sm={2}>
-              Username
+            <Label for="usuario" sm="2">
+              Usuário
             </Label>
-            <Col sm={10}>
-              <Input type="text" name="nome" placeholder="Informe o username" />
+            <Col sm="12">
+              <Input
+                type="text"
+                name="usuario"
+                onChange={handleChange}
+                value={form.usuario || ''}
+                placeholder="Informe o usuário"
+              />
             </Col>
           </FormGroup>
           <FormGroup row>
             <Label for="senha" sm={2}>
               Senha
             </Label>
-            <Col sm={10}>
+            <Col sm={12}>
               <Input
                 type="password"
                 name="senha"
+                onChange={handleChange}
+                value={form.senha || ''}
                 placeholder="Informe a senha"
               />
             </Col>
           </FormGroup>
         </LoginForm>
+        <br />
         <center>
-          <Button color="danger">Login</Button>
+          <Button color="danger" onClick={submitForm}>
+            Login
+          </Button>
         </center>
       </div>
     </Area>
@@ -45,7 +76,7 @@ const Login = () => {
 export default Login;
 
 const LoginForm = styled(Form)`
-  width: 450px;
+  width: 100%;
 `;
 
 const Area = styled.div`

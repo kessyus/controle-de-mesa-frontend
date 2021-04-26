@@ -74,7 +74,9 @@ const CardapioRestaurante = () => {
                 </tr>
               ))
             ) : (
-              <div>Loading...</div>
+              <tr>
+                <th>Loading...</th>
+              </tr>
             )}
           </tbody>
         </Table>
