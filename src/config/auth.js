@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'auth_bistro_carioca';
+const TOKEN_KEY = process.env.TOKEN;
 
 const getToken = () => {
   const data = JSON.parse(localStorage.getItem(TOKEN_KEY));

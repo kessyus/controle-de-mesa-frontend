@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Button, Form, FormGroup, Col, Label, Input } from 'reactstrap';
+import {
+  Alert,
+  Button,
+  Form,
+  FormGroup,
+  Col,
+  Label,
+  Input,
+  Spinner,
+} from 'reactstrap';
 import styled from 'styled-components';
 import { signInAction } from '../store/auth/auth.action';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
-  const [alertVisible, setAlertVisible] = useState(false);
-  const onDismiss = () => setAlertVisible(false);
+  const [hasError, setHasError] = useState(false);
+  const onDismiss = () => setHasError(false);
 
   const dispatch = useDispatch();
   const error = useSelector((state) => state.auth.error);
@@ -26,13 +35,20 @@ const Login = () => {
     dispatch(signInAction(form));
   };
 
+  useEffect(() => {
+    setHasError(error.length > 0);
+  }, [error]);
+
   return (
     <Area>
-      <Alert color="danger" isOpen={alertVisible} toggle={onDismiss}>
+      <Alert color="danger" isOpen={hasError} toggle={onDismiss}>
         Usuário ou senha incorreto!
       </Alert>
       <div>
         <LoginForm>
+          <FormGroup row>
+            <h4>Atenção! Área restrita do restaurante.</h4>
+          </FormGroup>
           <FormGroup row>
             <Label for="usuario" sm="2">
               Usuário
@@ -41,6 +57,7 @@ const Login = () => {
               <Input
                 type="text"
                 name="usuario"
+                disabled={loading}
                 onChange={handleChange}
                 value={form.usuario || ''}
                 placeholder="Informe o usuário"
@@ -55,6 +72,7 @@ const Login = () => {
               <Input
                 type="password"
                 name="senha"
+                disabled={loading}
                 onChange={handleChange}
                 value={form.senha || ''}
                 placeholder="Informe a senha"
@@ -65,7 +83,13 @@ const Login = () => {
         <br />
         <center>
           <Button color="danger" onClick={submitForm}>
-            Login
+            {loading ? (
+              <>
+                <Spinner size="sm" color="light" /> Carregando...
+              </>
+            ) : (
+              'Login'
+            )}
           </Button>
         </center>
       </div>

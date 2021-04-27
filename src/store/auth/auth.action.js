@@ -57,6 +57,6 @@ export const logoutAction = (data) => {
   return async (dispatch) => {
     removeToken();
     dispatch({ type: TYPES.SIGN_OUT });
-    history.push('/signin');
+    history.push('/login');
   };
 };

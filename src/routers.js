@@ -11,7 +11,7 @@ import Mesas from './views/mesa';
 import Detalhes from './views/detalhes';
 import Cardapio from './views/cardapio';
 import Login from './views/login';
-// import Cadastro from './views/cadastro;
+import Cadastro from './views/cadastro';
 
 const AdminRoute = ({ ...data }) => {
   if (!isAuthenticated()) {
@@ -37,15 +37,15 @@ const Routers = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/cardapio" component={Cardapio} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/mesa" component={Mesas} />
+          <Route exact path="/mesa/:id" component={Detalhes} />
 
           {/* ADMIN */}
-          {/* <AdminRoute exact path='/cadastro' admin={isAdmin} component={Cadastro} /> */}
-          <AdminRoute exact path="/mesa" admin={isAdmin} component={Mesas} />
           <AdminRoute
             exact
-            path="/mesa/:id"
+            path="/cadastro"
             admin={isAdmin}
-            component={Detalhes}
+            component={Cadastro}
           />
 
           <Redirect from="*" to="/" />

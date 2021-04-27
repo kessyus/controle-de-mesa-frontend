@@ -9,17 +9,29 @@ import {
   NavbarToggler,
   NavItem,
   NavLink,
+  UncontrolledDropdown,
+  DropdownItem,
+  DropdownToggle,
+  DropdownMenu,
 } from 'reactstrap';
 import styled from 'styled-components';
 import myLogo from '../../assets/img/texto_final.svg';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { isAuthenticated } from '../../config/auth';
+import { logoutAction } from '../../store/auth/auth.action';
+import history from '../../config/history';
 
 const Header = (props) => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const userName = useSelector((state) => state.auth.usuario.nome);
+
+  const logout = () => {
+    dispatch(logoutAction());
+  };
 
   return (
     <header>
@@ -83,14 +95,35 @@ const Header = (props) => {
               )}
 
               <NavItem>
-                <SNavLink
-                  exact
-                  tag={RRDNavLink}
-                  activeClassName="active"
-                  to="/login"
-                >
-                  Login
-                </SNavLink>
+                {userName ? (
+                  <UncontrolledDropdown>
+                    <DropdownToggle nav caret>
+                      @{userName}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      {isAdmin ? (
+                        <>
+                          <DropdownItem onClick={() => history.push('/')}>
+                            Usuários
+                          </DropdownItem>
+                          <DropdownItem divider />
+                        </>
+                      ) : (
+                        ''
+                      )}
+                      <DropdownItem onClick={logout}>Sair</DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                ) : (
+                  <SNavLink
+                    exact
+                    tag={RRDNavLink}
+                    activeClassName="active"
+                    to="/login"
+                  >
+                    Login
+                  </SNavLink>
+                )}
               </NavItem>
             </Nav>
           </SCollapse>
