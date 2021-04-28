@@ -68,9 +68,9 @@ const CardapioRestaurante = () => {
               cardapio.map((v, i) => (
                 <tr key={i}>
                   <Categoria>{v.categoria}</Categoria>
-                  <th>{v.produto}</th>
-                  <th>{v.descricao}</th>
-                  <th>{v.preco}</th>
+                  <td>{v.produto}</td>
+                  <td>{v.descricao}</td>
+                  <td>{v.preco}</td>
                 </tr>
               ))
             ) : (
@@ -113,7 +113,7 @@ const Titulo = styled.h1`
   margin: 50px;
 `;
 
-const Categoria = styled.th`
+const Categoria = styled.td`
   @media only screen and (max-width: 700px) {
     display: none;
   }

@@ -6,6 +6,7 @@ import {
   ModalFooter,
   ModalHeader,
   Table,
+  Alert,
 } from 'reactstrap';
 import { deleteServicePedido } from '../../services/mesas.service';
 import ReactSwal from '../../plugins/swal';
@@ -13,6 +14,9 @@ import { BiTrash } from 'react-icons/bi';
 import styled from 'styled-components';
 
 const Pedido = ({ lista, update }) => {
+  const [hasError, setHasError] = useState(false);
+  const onDismiss = () => setHasError(false);
+
   const [modal, setModal] = useState({
     isOpen: false,
     data: null,
@@ -34,7 +38,13 @@ const Pedido = ({ lista, update }) => {
             isOpen: !modal.isOpen,
           });
         })
-        .catch((erro) => console.log(erro));
+        .catch((erro) => {
+          console.log(erro);
+          setModal({
+            isOpen: !modal.isOpen,
+          });
+          setHasError(true);
+        });
     }
   };
 
@@ -47,6 +57,9 @@ const Pedido = ({ lista, update }) => {
 
   return (
     <div>
+      <Alerta color="danger" isOpen={hasError} toggle={onDismiss}>
+        Você não tem permissão para esta ação!
+      </Alerta>
       <h3>Pedidos realizados:</h3>
       {lista && lista.length ? (
         <div>
@@ -120,4 +133,8 @@ const STable = styled(Table)`
 
 const Texto = styled.div`
   color: black !important;
+`;
+
+const Alerta = styled(Alert)`
+  width: 400px;
 `;
