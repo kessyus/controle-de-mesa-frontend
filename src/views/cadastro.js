@@ -199,12 +199,12 @@ const Cadastro = () => {
                 >
                   <option>Selecione a categoria</option>
                   <option data-divider="true">-----------</option>
-                  <option value="Aperitivos">Aperitivos</option>
-                  <option value="Steaks">Steaks</option>
-                  <option value="Massas">Massas</option>
-                  <option value="Acompanhamentos">Acompanhamentos</option>
-                  <option value="Sobremesas">Sobremesas</option>
-                  <option value="Bebidas">Bebidas</option>
+                  <option value="1 - Aperitivos">Aperitivos</option>
+                  <option value="2 - Steaks">Steaks</option>
+                  <option value="3 - Massas">Massas</option>
+                  <option value="4 - Acompanhamentos">Acompanhamentos</option>
+                  <option value="5 - Sobremesas">Sobremesas</option>
+                  <option value="6 - Bebidas">Bebidas</option>
                 </Input>
               </FormGroup>
               <FormGroup>
