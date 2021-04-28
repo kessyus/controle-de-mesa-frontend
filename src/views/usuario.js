@@ -13,37 +13,37 @@ import {
   Input,
 } from 'reactstrap';
 import ReactSwal from '../plugins/swal';
-import { getServiceAllCardapio } from '../services/mesas.service';
 import styled from 'styled-components';
 import { BiTrash, BiEdit } from 'react-icons/bi';
 import {
-  createItemCardapio,
-  changeItemCardapio,
-  deleteItemCardapio,
-} from '../services/cardapio.service';
+  listUsers,
+  createUsers,
+  changeUsersById,
+  deleteUsersById,
+} from '../services/usuario.service';
 
-const Cadastro = () => {
+const Usuario = () => {
   const [modal, setModal] = useState(false);
-  const [cardapio, setCardapio] = useState({});
+  const [users, setUsers] = useState({});
   const [update, setUpdate] = useState(false);
   const [isChange, setChange] = useState(false);
   const [form, setForm] = useState({});
 
   const toggle = () => setModal(!modal);
 
-  const getCardapio = useCallback(async () => {
+  const getUsers = useCallback(async () => {
     try {
-      const res = await getServiceAllCardapio();
-      setCardapio(res.data);
+      const res = await listUsers();
+      setUsers(res.data);
     } catch (error) {
       console.log(error);
     }
   }, []);
 
   useEffect(() => {
-    getCardapio();
+    getUsers();
     setUpdate(false);
-  }, [getCardapio, update]);
+  }, [getUsers, update]);
 
   const handleChange = (e) => {
     setForm({
@@ -52,21 +52,21 @@ const Cadastro = () => {
     });
   };
 
-  const includeTable = () => {
+  const includeUser = () => {
     setChange(false);
     setForm({});
     toggle();
   };
 
-  const editTable = ({ id, categoria, produto, descricao, preco }) => {
+  const editUser = ({ id, nome, tipo }) => {
     setChange(true);
-    setForm({ ...form, id, categoria, produto, descricao, preco });
+    setForm({ ...form, id, nome, tipo });
     toggle();
   };
 
-  const deleteTable = (id, produto) => {
+  const deleteUser = (id, nome) => {
     ReactSwal.fire({
-      title: `Deseja excluir o item ${produto}?`,
+      title: `Deseja excluir o usuário ${nome}?`,
       showDenyButton: false,
       showCancelButton: true,
       confirmButtonText: `Sim`,
@@ -74,11 +74,11 @@ const Cadastro = () => {
       cancelButtonText: `Não`,
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteItemCardapio(id)
+        deleteUsersById(id)
           .then(() => {
             ReactSwal.fire({
               icon: 'success',
-              title: `Produto excluído com sucesso!`,
+              title: `Usuário excluído com sucesso!`,
               showConfirmButton: false,
               showCloseButton: false,
               timer: 2500,
@@ -94,17 +94,20 @@ const Cadastro = () => {
 
   const submitForm = () => {
     const data = {
-      produto: form.produto,
-      preco: form.preco,
-      descricao: form.descricao,
-      categoria: form.categoria,
+      nome: form.nome,
+      tipo: form.tipo,
+      senha: form.senha,
+    };
+    const dataChange = {
+      nome: form.nome,
+      tipo: form.tipo,
     };
     isChange
-      ? changeItemCardapio(form.id, data)
+      ? changeUsersById(form.id, dataChange)
           .then(() => {
             ReactSwal.fire({
               icon: 'success',
-              title: `Produto alterado com sucesso!`,
+              title: `Usuário alterado com sucesso!`,
               showConfirmButton: false,
               showCloseButton: false,
               timer: 2500,
@@ -115,11 +118,11 @@ const Cadastro = () => {
           .catch((error) => {
             console.log(error);
           })
-      : createItemCardapio(data)
+      : createUsers(data)
           .then(() => {
             ReactSwal.fire({
               icon: 'success',
-              title: `Produto incluído com sucesso!`,
+              title: `Usuário incluído com sucesso!`,
               showConfirmButton: false,
               showCloseButton: false,
               timer: 2500,
@@ -135,8 +138,8 @@ const Cadastro = () => {
   return (
     <Main>
       <Title>
-        <h3>Produtos disponíveis:</h3>
-        <Button onClick={includeTable} size="sm" color="danger">
+        <h3>Usuários cadastrados:</h3>
+        <Button onClick={includeUser} size="sm" color="danger">
           Cadastrar
         </Button>
       </Title>
@@ -144,32 +147,28 @@ const Cadastro = () => {
       <Table responsive striped dark size="sm">
         <thead>
           <tr>
-            <Categoria>Categoria</Categoria>
-            <th>Produto</th>
-            <th>Descrição</th>
-            <th>Preço</th>
+            <th>Username</th>
+            <th>Função</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          {cardapio && cardapio.length ? (
-            cardapio &&
-            cardapio.map((v, i) => (
+          {users && users.length ? (
+            users &&
+            users.map((v, i) => (
               <tr key={i}>
-                <Categoria>{v.categoria}</Categoria>
-                <td>{v.produto}</td>
-                <td>{v.descricao}</td>
-                <td>{v.preco}</td>
+                <td>{v.nome}</td>
+                <td>{v.tipo === '1' ? 'Administrador' : 'Funcionário'}</td>
                 <td>
                   <BiEdit
                     style={{ cursor: 'pointer' }}
                     className="text-info mr-1 font-weight-normal"
-                    onClick={() => editTable(v)}
+                    onClick={() => editUser(v)}
                   />{' '}
                   <BiTrash
                     style={{ cursor: 'pointer' }}
                     className="text-danger font-weight-normal"
-                    onClick={() => deleteTable(v.id, v.produto)}
+                    onClick={() => deleteUser(v.id, v.nome)}
                   />
                 </td>
               </tr>
@@ -184,57 +183,66 @@ const Cadastro = () => {
 
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader className="bg-dark" toggle={toggle}>
-          {isChange ? 'Atualizar' : 'Cadastrar'} produto
+          {isChange ? 'Atualizar' : 'Cadastrar'} usuário
         </ModalHeader>
         <ModalBody>
           <Row>
             <Col xs="12" sm="12" md="12" lg="12">
               <FormGroup>
-                <Caption for="name">Categoria</Caption>
+                <Caption for="name">Usuário</Caption>
+                {isChange ? (
+                  <Input
+                    type="text"
+                    value={form.nome || ''}
+                    onChange={handleChange}
+                    name="nome"
+                    placeholder="Insira o usuário"
+                    disabled
+                  />
+                ) : (
+                  <Input
+                    type="text"
+                    value={form.nome || ''}
+                    onChange={handleChange}
+                    name="nome"
+                    placeholder="Insira o usuário"
+                  />
+                )}
+              </FormGroup>
+              <FormGroup>
+                <Caption for="name">Senha</Caption>
+                {isChange ? (
+                  <Input
+                    type="password"
+                    value={form.senha || ''}
+                    onChange={handleChange}
+                    name="senha"
+                    placeholder="Insira a senha"
+                    disabled
+                  />
+                ) : (
+                  <Input
+                    type="password"
+                    value={form.senha || ''}
+                    onChange={handleChange}
+                    name="senha"
+                    placeholder="Insira a senha"
+                  />
+                )}
+              </FormGroup>
+              <FormGroup>
+                <Caption for="name">Função</Caption>
                 <Input
                   type="select"
-                  value={form.categoria || ' '}
+                  value={form.tipo || ' '}
                   onChange={handleChange}
-                  name="categoria"
+                  name="tipo"
                 >
-                  <option>Selecione a categoria</option>
+                  <option>Selecione a função</option>
                   <option data-divider="true">-----------</option>
-                  <option value="1 - Aperitivos">Aperitivos</option>
-                  <option value="2 - Steaks">Steaks</option>
-                  <option value="3 - Massas">Massas</option>
-                  <option value="4 - Acompanhamentos">Acompanhamentos</option>
-                  <option value="5 - Sobremesas">Sobremesas</option>
-                  <option value="6 - Bebidas">Bebidas</option>
+                  <option value="1">Administrador</option>
+                  <option value="2">Funcionário</option>
                 </Input>
-              </FormGroup>
-              <FormGroup>
-                <Caption for="name">Produto</Caption>
-                <Input
-                  type="text"
-                  value={form.produto || ''}
-                  onChange={handleChange}
-                  name="produto"
-                  placeholder="Insira o produto"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Caption for="name">Descrição</Caption>
-                <Input
-                  type="text"
-                  value={form.descricao || ''}
-                  onChange={handleChange}
-                  name="descricao"
-                  placeholder="Insira a descrição"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Caption for="name">Preço</Caption>
-                <Input
-                  type="number"
-                  value={form.preco || ''}
-                  onChange={handleChange}
-                  name="preco"
-                />
               </FormGroup>
             </Col>
           </Row>
@@ -249,19 +257,13 @@ const Cadastro = () => {
   );
 };
 
-export default Cadastro;
+export default Usuario;
 
 const Title = styled.div`
   padding: 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const Categoria = styled.td`
-  @media only screen and (max-width: 700px) {
-    display: none;
-  }
 `;
 
 const Caption = styled(Label)`

@@ -21,7 +21,7 @@ import { isAuthenticated } from '../../config/auth';
 import { logoutAction } from '../../store/auth/auth.action';
 import history from '../../config/history';
 
-const Header = (props) => {
+const Header = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -103,7 +103,9 @@ const Header = (props) => {
                     <DropdownMenu>
                       {isAdmin ? (
                         <>
-                          <DropdownItem onClick={() => history.push('/')}>
+                          <DropdownItem
+                            onClick={() => history.push('/usuarios')}
+                          >
                             Usuários
                           </DropdownItem>
                           <DropdownItem divider />

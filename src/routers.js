@@ -12,6 +12,7 @@ import Detalhes from './views/detalhes';
 import Cardapio from './views/cardapio';
 import Login from './views/login';
 import Cadastro from './views/cadastro';
+import Usuario from './views/usuario';
 
 const AdminRoute = ({ ...data }) => {
   if (!isAuthenticated()) {
@@ -46,6 +47,13 @@ const Routers = () => {
             path="/cadastro"
             admin={isAdmin}
             component={Cadastro}
+          />
+
+          <AdminRoute
+            exact
+            path="/usuarios"
+            admin={isAdmin}
+            component={Usuario}
           />
 
           <Redirect from="*" to="/" />
