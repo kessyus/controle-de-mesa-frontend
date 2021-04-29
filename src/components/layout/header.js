@@ -19,7 +19,6 @@ import myLogo from '../../assets/img/texto_final.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { isAuthenticated } from '../../config/auth';
 import { logoutAction } from '../../store/auth/auth.action';
-import history from '../../config/history';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -80,16 +79,28 @@ const Header = () => {
               )}
 
               {isAdmin ? (
-                <NavItem>
-                  <SNavLink
-                    exact
-                    tag={RRDNavLink}
-                    activeClassName="active"
-                    to="/cadastro"
-                  >
-                    Cadastro
-                  </SNavLink>
-                </NavItem>
+                <>
+                  <NavItem>
+                    <SNavLink
+                      exact
+                      tag={RRDNavLink}
+                      activeClassName="active"
+                      to="/cadastro"
+                    >
+                      Cadastro
+                    </SNavLink>
+                  </NavItem>
+                  <NavItem>
+                    <SNavLink
+                      exact
+                      tag={RRDNavLink}
+                      activeClassName="active"
+                      to="/relatorio"
+                    >
+                      Relatório
+                    </SNavLink>
+                  </NavItem>
+                </>
               ) : (
                 ''
               )}
@@ -101,18 +112,6 @@ const Header = () => {
                       @{userName}
                     </DropdownToggle>
                     <DropdownMenu>
-                      {isAdmin ? (
-                        <>
-                          <DropdownItem
-                            onClick={() => history.push('/usuarios')}
-                          >
-                            Usuários
-                          </DropdownItem>
-                          <DropdownItem divider />
-                        </>
-                      ) : (
-                        ''
-                      )}
                       <DropdownItem onClick={logout}>Sair</DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>

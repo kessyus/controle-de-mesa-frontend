@@ -1,273 +1,87 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  Button,
-  Table,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
   Row,
   Col,
-  FormGroup,
-  Label,
-  Input,
 } from 'reactstrap';
-import ReactSwal from '../plugins/swal';
-import { getServiceAllCardapio } from '../services/mesas.service';
-import styled from 'styled-components';
-import { BiTrash, BiEdit } from 'react-icons/bi';
-import {
-  createItemCardapio,
-  changeItemCardapio,
-  deleteItemCardapio,
-} from '../services/cardapio.service';
+import classnames from 'classnames';
+import Produto from '../components/produto';
+import Usuario from '../components/usuario';
+import Mesa from '../components/cadmesa';
 
 const Cadastro = () => {
-  const [modal, setModal] = useState(false);
-  const [cardapio, setCardapio] = useState({});
-  const [update, setUpdate] = useState(false);
-  const [isChange, setChange] = useState(false);
-  const [form, setForm] = useState({});
+  const [activeTab, setActiveTab] = useState('1');
 
-  const toggle = () => setModal(!modal);
-
-  const getCardapio = useCallback(async () => {
-    try {
-      const res = await getServiceAllCardapio();
-      setCardapio(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  useEffect(() => {
-    getCardapio();
-    setUpdate(false);
-  }, [getCardapio, update]);
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const includeTable = () => {
-    setChange(false);
-    setForm({});
-    toggle();
-  };
-
-  const editTable = ({ id, categoria, produto, descricao, preco }) => {
-    setChange(true);
-    setForm({ ...form, id, categoria, produto, descricao, preco });
-    toggle();
-  };
-
-  const deleteTable = (id, produto) => {
-    ReactSwal.fire({
-      title: `Deseja excluir o item ${produto}?`,
-      showDenyButton: false,
-      showCancelButton: true,
-      confirmButtonText: `Sim`,
-      confirmButtonColor: '#C82332',
-      cancelButtonText: `Não`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteItemCardapio(id)
-          .then(() => {
-            ReactSwal.fire({
-              icon: 'success',
-              title: `Produto excluído com sucesso!`,
-              showConfirmButton: false,
-              showCloseButton: false,
-              timer: 2500,
-            });
-            setUpdate(true);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    });
-  };
-
-  const submitForm = () => {
-    const data = {
-      produto: form.produto,
-      preco: form.preco,
-      descricao: form.descricao,
-      categoria: form.categoria,
-    };
-    isChange
-      ? changeItemCardapio(form.id, data)
-          .then(() => {
-            ReactSwal.fire({
-              icon: 'success',
-              title: `Produto alterado com sucesso!`,
-              showConfirmButton: false,
-              showCloseButton: false,
-              timer: 2500,
-            });
-            toggle();
-            setUpdate(true);
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-      : createItemCardapio(data)
-          .then(() => {
-            ReactSwal.fire({
-              icon: 'success',
-              title: `Produto incluído com sucesso!`,
-              showConfirmButton: false,
-              showCloseButton: false,
-              timer: 2500,
-            });
-            toggle();
-            setUpdate(true);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+  const toggle = (tab) => {
+    if (activeTab !== tab) setActiveTab(tab);
   };
 
   return (
-    <Main>
-      <Title>
-        <h3>Produtos disponíveis:</h3>
-        <Button onClick={includeTable} size="sm" color="danger">
-          Cadastrar
-        </Button>
-      </Title>
-
-      <Table responsive striped dark size="sm">
-        <thead>
-          <tr>
-            <Categoria>Categoria</Categoria>
-            <th>Produto</th>
-            <th>Descrição</th>
-            <th>Preço</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cardapio && cardapio.length ? (
-            cardapio &&
-            cardapio.map((v, i) => (
-              <tr key={i}>
-                <Categoria>{v.categoria}</Categoria>
-                <td>{v.produto}</td>
-                <td>{v.descricao}</td>
-                <td>{v.preco}</td>
-                <td>
-                  <BiEdit
-                    style={{ cursor: 'pointer' }}
-                    className="text-info mr-1 font-weight-normal"
-                    onClick={() => editTable(v)}
-                  />{' '}
-                  <BiTrash
-                    style={{ cursor: 'pointer' }}
-                    className="text-danger font-weight-normal"
-                    onClick={() => deleteTable(v.id, v.produto)}
-                  />
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="3">Loading...</td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader className="bg-dark" toggle={toggle}>
-          {isChange ? 'Atualizar' : 'Cadastrar'} produto
-        </ModalHeader>
-        <ModalBody>
+    <div>
+      <Nav tabs className="nav nav-tabs justify-content-center">
+        <NavItem>
+          <NavLink
+            style={{ cursor: 'pointer', color: '#BAA99F' }}
+            className={classnames({ active: activeTab === '1' })}
+            onClick={() => {
+              toggle('1');
+            }}
+          >
+            Produtos
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            style={{ cursor: 'pointer', color: '#BAA99F' }}
+            className={classnames({ active: activeTab === '2' })}
+            onClick={() => {
+              toggle('2');
+            }}
+          >
+            Mesas
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            style={{ cursor: 'pointer', color: '#BAA99F' }}
+            className={classnames({ active: activeTab === '3' })}
+            onClick={() => {
+              toggle('3');
+            }}
+          >
+            Usuários
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <TabContent activeTab={activeTab}>
+        <TabPane tabId="1">
           <Row>
-            <Col xs="12" sm="12" md="12" lg="12">
-              <FormGroup>
-                <Caption for="name">Categoria</Caption>
-                <Input
-                  type="select"
-                  value={form.categoria || ' '}
-                  onChange={handleChange}
-                  name="categoria"
-                >
-                  <option>Selecione a categoria</option>
-                  <option data-divider="true">-----------</option>
-                  <option value="1 - Aperitivos">Aperitivos</option>
-                  <option value="2 - Steaks">Steaks</option>
-                  <option value="3 - Massas">Massas</option>
-                  <option value="4 - Acompanhamentos">Acompanhamentos</option>
-                  <option value="5 - Sobremesas">Sobremesas</option>
-                  <option value="6 - Bebidas">Bebidas</option>
-                </Input>
-              </FormGroup>
-              <FormGroup>
-                <Caption for="name">Produto</Caption>
-                <Input
-                  type="text"
-                  value={form.produto || ''}
-                  onChange={handleChange}
-                  name="produto"
-                  placeholder="Insira o produto"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Caption for="name">Descrição</Caption>
-                <Input
-                  type="text"
-                  value={form.descricao || ''}
-                  onChange={handleChange}
-                  name="descricao"
-                  placeholder="Insira a descrição"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Caption for="name">Preço</Caption>
-                <Input
-                  type="number"
-                  value={form.preco || ''}
-                  onChange={handleChange}
-                  name="preco"
-                />
-              </FormGroup>
+            <Col sm="12">
+              <Produto />
             </Col>
           </Row>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="danger" onClick={submitForm}>
-            {isChange ? 'Atualizar' : 'Cadastrar'}
-          </Button>
-        </ModalFooter>
-      </Modal>
-    </Main>
+        </TabPane>
+        <TabPane tabId="2">
+          <Row>
+            <Col sm="12">
+              <Mesa />
+            </Col>
+          </Row>
+        </TabPane>
+        <TabPane tabId="3">
+          <Row>
+            <Col sm="12">
+              <Usuario />
+            </Col>
+          </Row>
+        </TabPane>
+      </TabContent>
+    </div>
   );
 };
 
 export default Cadastro;
-
-const Title = styled.div`
-  padding: 30px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const Categoria = styled.td`
-  @media only screen and (max-width: 700px) {
-    display: none;
-  }
-`;
-
-const Caption = styled(Label)`
-  color: black !important;
-`;
-
-const Main = styled.div`
-  padding: 10px;
-`;

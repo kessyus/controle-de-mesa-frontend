@@ -47,7 +47,7 @@ const Login = () => {
       <div>
         <LoginForm>
           <FormGroup row>
-            <h4>Atenção! Área restrita do restaurante.</h4>
+            <h5>Atenção! Área restrita do restaurante.</h5>
           </FormGroup>
           <FormGroup row>
             <Label for="usuario" sm="2">
