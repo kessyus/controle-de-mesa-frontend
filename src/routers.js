@@ -49,7 +49,12 @@ const Routers = () => {
             component={Cadastro}
           />
 
-          <AdminRoute exact path="/" admin={isAdmin} component={Relatorio} />
+          <AdminRoute
+            exact
+            path="/relatorio"
+            admin={isAdmin}
+            component={Relatorio}
+          />
 
           <Redirect from="*" to="/" />
         </Switch>
