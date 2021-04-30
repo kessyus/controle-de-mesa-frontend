@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
 import { getServiceAllMesas } from '../services/mesas.service';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Row } from 'reactstrap';
 import CardItem from '../components/mesas/mesaCard';
 import Loading from '../components/loading';
@@ -10,7 +10,7 @@ const Mesas = () => {
   const [loading, setLoading] = useState(false);
   const [hasError, setError] = useState(false);
 
-  const getMesas = useCallback(() => {
+  const getMesas = useCallback(async () => {
     setLoading(true);
     getServiceAllMesas()
       .then((res) => {

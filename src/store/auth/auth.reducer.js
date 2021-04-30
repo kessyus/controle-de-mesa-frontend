@@ -7,7 +7,6 @@ const INITIAL_STATE = {
   token: getToken() || '',
   usuario: getUser() || {},
   error: [],
-  registered: false,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -17,13 +16,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       state.loading = action.status;
       return state;
     case TYPES.SIGN_IN:
-      state.token = action.data.token;
-      state.usuario = action.data.usuario;
-      state.isAdmin = action.data.usuario.tipo === '1';
-      state.loading = false;
-      return state;
-    case TYPES.SIGN_UP:
-      state.registered = true;
       state.token = action.data.token;
       state.usuario = action.data.usuario;
       state.isAdmin = action.data.usuario.tipo === '1';
