@@ -36,8 +36,8 @@ const Routers = () => {
       <Layout page="Bistrô Carioca">
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/cardapio" component={Cardapio} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/cardapio" component={Cardapio} />
           <Route exact path="/mesa" component={Mesas} />
           <Route exact path="/mesa/:id" component={Detalhes} />
 
