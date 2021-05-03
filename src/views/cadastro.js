@@ -25,7 +25,7 @@ const Cadastro = () => {
       <Nav tabs className="nav nav-tabs justify-content-center">
         <NavItem>
           <NavLink
-            style={{ cursor: 'pointer', color: '#BAA99F' }}
+            style={{ cursor: 'pointer', color: '#BAA99F', background: 'none' }}
             className={classnames({ active: activeTab === '1' })}
             onClick={() => {
               toggle('1');
@@ -36,7 +36,7 @@ const Cadastro = () => {
         </NavItem>
         <NavItem>
           <NavLink
-            style={{ cursor: 'pointer', color: '#BAA99F' }}
+            style={{ cursor: 'pointer', color: '#BAA99F', background: 'none' }}
             className={classnames({ active: activeTab === '2' })}
             onClick={() => {
               toggle('2');
@@ -47,7 +47,7 @@ const Cadastro = () => {
         </NavItem>
         <NavItem>
           <NavLink
-            style={{ cursor: 'pointer', color: '#BAA99F' }}
+            style={{ cursor: 'pointer', color: '#BAA99F', background: 'none' }}
             className={classnames({ active: activeTab === '3' })}
             onClick={() => {
               toggle('3');

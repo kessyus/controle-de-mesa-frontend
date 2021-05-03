@@ -75,7 +75,7 @@ const CardapioRestaurante = () => {
               ))
             ) : (
               <tr>
-                <th>Loading...</th>
+                <td colSpan="4">Loading...</td>
               </tr>
             )}
           </tbody>

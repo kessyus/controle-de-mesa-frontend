@@ -17,22 +17,25 @@ const Produtos = ({ cardapio, idmesa, update }) => {
   };
 
   const fazerPedido = () => {
-    createServicePedido(idmesa, produtos)
-      .then(() => {
-        ReactSwal.fire({
-          icon: 'success',
-          title: `Produto incluído com sucesso!`,
-          showConfirmButton: false,
-          showCloseButton: false,
-          timer: 2500,
+    if (!isNaN(produtos.idcardapio) && produtos.idcardapio !== '-----------') {
+      createServicePedido(idmesa, produtos)
+        .then((res) => {
+          console.log(res);
+          ReactSwal.fire({
+            icon: 'success',
+            title: `Produto incluído com sucesso!`,
+            showConfirmButton: false,
+            showCloseButton: false,
+            timer: 2500,
+          });
+          setProdutos({});
+          update(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          setHasError(true);
         });
-        setProdutos({});
-        update(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        setHasError(true);
-      });
+    }
   };
 
   return (
